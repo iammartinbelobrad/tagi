@@ -9,7 +9,9 @@ var Tagr = React.createClass({
             link: null,
             source: null,
             medium: null,
-            output: null
+            longLink: null,
+            shortLink: null,
+            shortener: true
         };
     },
     handleSourceButtonClick: function(sourceData, e) {
@@ -21,29 +23,74 @@ var Tagr = React.createClass({
     handleCampaignNameChange: function(e) {
         this.setState({
             campaing: e.target.value
+        }, function() {
+            this.setState({
+                shortLink: null,
+                longLink: null
+            });
         });
     },
     handleLinkChange: function(e) {
         this.setState({
             link: e.target.value
+        }, function() {
+            this.setState({
+                longLink: null,
+                shortLink: null,
+            });
+        });
+    },
+    handleShortenerSwitch: function(e) {
+        this.setState({
+            shortener: e.target.checked
+        }, function() {
+            if(this.state.shortener === false) {
+                this.setState({
+                    shortLink: null,
+                    longLink: null
+                });
+            }
+        });
+
+    },
+    setShortUrl: function(response) {
+        this.setState({
+            shortLink: response.id
         });
     },
     generate: function() {
         // generate normal link
         var longLink = this.state.link + '?utm_source=' + this.state.source + '&utm_medium=' + this.state.medium + '&utm_campaing=' + encodeURIComponent(this.state.campaing);
-
-        // generate short link
-        //TODO: goo.gl API
-
         this.setState({
-            output: longLink
+            'longLink': longLink
         });
+
+        if(this.state.shortener === true) {
+            // generate short link
+            var parent = this;
+
+            require('google-client-api')().then(function (gapi) {
+                gapi.client.setApiKey('AIzaSyDNOFzGzxS53wGp9pndTt3iQNGUcV62wVQ');
+                gapi.client.load('urlshortener', 'v1').then(function () {
+                    var request = gapi.client.urlshortener.url.insert({
+                        resource: {
+                            longUrl: longLink
+                        }
+                    });
+                    request.execute(parent.setShortUrl, function (reason) {
+                        console.log('Error: ' + reason.result.error.message);
+                    });
+                });
+            });
+        }
+
     },
     render: function() {
         return (
             <div>
                 <CampaignNameField onChange={this.handleCampaignNameChange} placeholder="Campaign name" />
                 <LinkField onChange={this.handleLinkChange} placeholder="Paste link here" />
+                <ShortenerSwitch onClick={this.handleShortenerSwitch} />
                 <SourceButton onClick={this.handleSourceButtonClick} label="Facebook" source="facebook" medium="social" />
                 <SourceButton onClick={this.handleSourceButtonClick} label="Facebook Ads" source="facebook" medium="cpc" />
                 <SourceButton onClick={this.handleSourceButtonClick} label="Twitter" source="twitter" medium="social" />
@@ -54,8 +101,16 @@ var Tagr = React.createClass({
                 <SourceButton onClick={this.handleSourceButtonClick} label="E-mail or direct" source="email" medium="email" />
                 <SourceButton onClick={this.handleSourceButtonClick} label="Newsletter" source="newsletter" medium="email" />
                 <SourceButton onClick={this.handleSourceButtonClick} label="QR code" source="qrcode" medium="offline" />
-                <OutputField placeholder="And copy from here" value={this.state.output} />
+                <OutputField placeholder="And copy from here" value={this.state.shortener === true ? this.state.shortLink : this.state.longLink} />
             </div>
+        );
+    }
+});
+
+var ShortenerSwitch = React.createClass({
+    render: function() {
+        return (
+            <input type="checkbox" onClick={this.props.onClick} defaultChecked />
         );
     }
 });
@@ -64,7 +119,7 @@ var LinkField = React.createClass({
    render: function() {
        return (
            <input type="text" onChange={this.props.onChange} placeholder={this.props.placeholder} />
-       )
+       );
    }
 });
 
