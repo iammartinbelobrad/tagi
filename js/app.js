@@ -91,9 +91,12 @@ var CampaignNameField = React.createClass({
 });
 
 var OutputField = React.createClass({
+    handleClick: function(e) {
+        e.target.select();
+    },
     render: function() {
         return (
-            <input type="text" placeholder={this.props.placeholder} value={this.props.value} readOnly />
+            <input type="text" placeholder={this.props.placeholder} value={this.props.value} onClick={this.handleClick} readOnly />
         )
     }
 });
