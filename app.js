@@ -7,8 +7,8 @@ var TextField = require('material-ui/lib/text-field');
 var Toggle = require('material-ui/lib/toggle');
 var FontIcon = require('material-ui/lib/font-icon');
 
-var Tagr = React.createClass({
-    displayName: 'Tagr',
+var Tagi = React.createClass({
+    displayName: 'Tagi',
 
     getInitialState: function () {
 
@@ -105,7 +105,7 @@ var Tagr = React.createClass({
             React.createElement(
                 'h1',
                 null,
-                'URL tagging tool.'
+                'tagi - URL tagging tool.'
             ),
             React.createElement(
                 'div',
@@ -214,7 +214,7 @@ var OutputField = React.createClass({
     }
 });
 
-ReactDOM.render(React.createElement(Tagr, null), document.getElementById('tagr-app'));
+ReactDOM.render(React.createElement(Tagi, null), document.getElementById('tagi-app'));
 
 },{"google-client-api":2,"material-ui/lib/font-icon":20,"material-ui/lib/raised-button":25,"material-ui/lib/text-field":41,"material-ui/lib/toggle":42,"react":257,"react-dom":95}],2:[function(require,module,exports){
 (function (global){

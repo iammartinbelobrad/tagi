@@ -1,8 +1,8 @@
 {
-  "name": "tagr",
+  "name": "tagi",
   "description": "URL tagging tool.",
   "version": "0.1.0",
-  "homepage": "https://bitbucket.org/soundczeck/tagr",
+  "homepage": "https://bitbucket.org/soundczeck/tagi",
   "license": "BSD-3-Clause",
   "dependencies": {
     "react": "^0.14.7",

@@ -6,7 +6,7 @@ var TextField = require('material-ui/lib/text-field');
 var Toggle = require('material-ui/lib/toggle');
 var FontIcon = require('material-ui/lib/font-icon');
 
-var Tagr = React.createClass({
+var Tagi = React.createClass({
     getInitialState: function() {
 
         if(localStorage.getItem('shortenerSwitch') === null) {
@@ -100,7 +100,7 @@ var Tagr = React.createClass({
     render: function() {
         return (
             <div style={{padding: '2em'}}>
-                <h1>URL tagging tool.</h1>
+                <h1>tagi - URL tagging tool.</h1>
                 <div style={{marginBottom: '2em', fontSize: '0.75em'}}>
                     Created by <a href="http://belobrad.cz" target="_blank">Martin Belobrad</a>
                 </div>
@@ -189,6 +189,6 @@ var OutputField = React.createClass({
 });
 
 ReactDOM.render(
-    <Tagr />,
-    document.getElementById('tagr-app')
+    <Tagi />,
+    document.getElementById('tagi-app')
 );
