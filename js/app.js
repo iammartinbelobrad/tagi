@@ -1,6 +1,9 @@
 
 var React = require('react');
 var ReactDOM = require('react-dom');
+var FlatButton = require('material-ui/lib/raised-button');
+var TextField = require('material-ui/lib/text-field');
+var Toggle = require('material-ui/lib/toggle');
 
 var Tagr = React.createClass({
     getInitialState: function() {
@@ -87,20 +90,30 @@ var Tagr = React.createClass({
     },
     render: function() {
         return (
-            <div>
+            <div style={{maxWidth: 600, padding: '2em'}}>
                 <CampaignNameField onChange={this.handleCampaignNameChange} placeholder="Campaign name" />
                 <LinkField onChange={this.handleLinkChange} placeholder="Paste link here" />
                 <ShortenerSwitch onClick={this.handleShortenerSwitch} />
-                <SourceButton onClick={this.handleSourceButtonClick} label="Facebook" source="facebook" medium="social" />
-                <SourceButton onClick={this.handleSourceButtonClick} label="Facebook Ads" source="facebook" medium="cpc" />
-                <SourceButton onClick={this.handleSourceButtonClick} label="Twitter" source="twitter" medium="social" />
-                <SourceButton onClick={this.handleSourceButtonClick} label="Google+" source="google" medium="social" />
-                <SourceButton onClick={this.handleSourceButtonClick} label="Google AdWords" source="google" medium="cpc" />
-                <SourceButton onClick={this.handleSourceButtonClick} label="Bing" source="bing" medium="cpc" />
-                <SourceButton onClick={this.handleSourceButtonClick} label="Sklik" source="sklik" medium="cpc" />
-                <SourceButton onClick={this.handleSourceButtonClick} label="E-mail or direct" source="email" medium="email" />
-                <SourceButton onClick={this.handleSourceButtonClick} label="Newsletter" source="newsletter" medium="email" />
-                <SourceButton onClick={this.handleSourceButtonClick} label="QR code" source="qrcode" medium="offline" />
+                <div style={{margin: '1em 0'}}>
+                    <div>
+                        <SourceButton onClick={this.handleSourceButtonClick} label="Facebook" source="facebook" medium="social" />
+                        <SourceButton onClick={this.handleSourceButtonClick} label="Twitter" source="twitter" medium="social" />
+                        <SourceButton onClick={this.handleSourceButtonClick} label="Google+" source="google" medium="social" />
+                    </div>
+                    <div>
+                        <SourceButton onClick={this.handleSourceButtonClick} label="Facebook Ads" source="facebook" medium="cpc" color="#66D7E6" />
+                        <SourceButton onClick={this.handleSourceButtonClick} label="Google AdWords" source="google" medium="cpc" color="#66D7E6" />
+                        <SourceButton onClick={this.handleSourceButtonClick} label="Bing" source="bing" medium="cpc" color="#66D7E6" />
+                        <SourceButton onClick={this.handleSourceButtonClick} label="Sklik" source="sklik" medium="cpc" color="#66D7E6" />
+                    </div>
+                    <div>
+                        <SourceButton onClick={this.handleSourceButtonClick} label="E-mail or direct" source="email" medium="email" color="#ffd059" />
+                        <SourceButton onClick={this.handleSourceButtonClick} label="Newsletter" source="newsletter" medium="email" color="#ffd059" />
+                    </div>
+                    <div>
+                        <SourceButton onClick={this.handleSourceButtonClick} label="QR code" source="qrcode" medium="offline" color="#000000" />
+                    </div>
+                </div>
                 <OutputField placeholder="And copy from here" value={this.state.shortener === true ? this.state.shortLink : this.state.longLink} />
             </div>
         );
@@ -110,7 +123,7 @@ var Tagr = React.createClass({
 var ShortenerSwitch = React.createClass({
     render: function() {
         return (
-            <input type="checkbox" onClick={this.props.onClick} defaultChecked />
+            <Toggle onClick={this.props.onClick} defaultToggled={true} label="Generate short link" labelPosition="right" />
         );
     }
 });
@@ -118,7 +131,7 @@ var ShortenerSwitch = React.createClass({
 var LinkField = React.createClass({
    render: function() {
        return (
-           <input type="text" onChange={this.props.onChange} placeholder={this.props.placeholder} />
+           <TextField onChange={this.props.onChange} floatingLabelText={this.props.placeholder} fullWidth={true} />
        );
    }
 });
@@ -131,8 +144,12 @@ var SourceButton = React.createClass({
         };
     },
     render: function() {
+        var btnStyle = {
+            margin: '0.5em 1em 0.5em 0'
+        };
+
         return (
-            <button onClick={this.props.onClick.bind(null, this.state)}>{this.props.label}</button>
+            <FlatButton label={this.props.label} onClick={this.props.onClick.bind(null, this.state)} style={btnStyle} primary={true} backgroundColor={this.props.color} />
         );
     }
 });
@@ -140,18 +157,19 @@ var SourceButton = React.createClass({
 var CampaignNameField = React.createClass({
     render: function() {
         return (
-            <input type="text" onChange={this.props.onChange} placeholder={this.props.placeholder} />
+            <TextField onChange={this.props.onChange} floatingLabelText={this.props.placeholder} fullWidth={true} />
         );
     }
 });
 
 var OutputField = React.createClass({
     handleClick: function(e) {
-        e.target.select();
+        //e.target.select();
+        e.target.setSelectionRange(0, e.target.value.length);
     },
     render: function() {
         return (
-            <input type="text" placeholder={this.props.placeholder} value={this.props.value} onClick={this.handleClick} readOnly />
+            <TextField hintText={this.props.placeholder} value={this.props.value} onClick={this.handleClick} disabled={true} fullWidth={true} style={{fontSize: '2em'}} />
         )
     }
 });
