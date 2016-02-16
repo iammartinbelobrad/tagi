@@ -102,7 +102,7 @@ var Tagi = React.createClass({
             <div style={{padding: '2em'}}>
                 <h1>tagi - URL tagging tool.</h1>
                 <div style={{marginBottom: '2em', fontSize: '0.75em'}}>
-                    Created by <a href="http://belobrad.cz" target="_blank">Martin Belobrad</a>
+                    Created by <a href="http://belobrad.cz" target="_blank">Martin Belobrad</a>. <a href="https://bitbucket.org/soundczeck/tagi/issues" target="_blank">Report bug or idea on Bitbucket.</a>
                 </div>
                 <CampaignNameField onChange={this.handleCampaignNameChange} placeholder="Write campaign name here" />
                 <LinkField onChange={this.handleLinkChange} placeholder="Paste link here" />

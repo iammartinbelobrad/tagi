@@ -115,6 +115,12 @@ var Tagi = React.createClass({
                     'a',
                     { href: 'http://belobrad.cz', target: '_blank' },
                     'Martin Belobrad'
+                ),
+                '. ',
+                React.createElement(
+                    'a',
+                    { href: 'https://bitbucket.org/soundczeck/tagi/issues', target: '_blank' },
+                    'Report bug or idea on Bitbucket.'
                 )
             ),
             React.createElement(CampaignNameField, { onChange: this.handleCampaignNameChange, placeholder: 'Write campaign name here' }),
