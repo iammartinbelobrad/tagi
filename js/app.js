@@ -71,8 +71,21 @@ var Tagi = React.createClass({
         });
     },
     generate: function() {
+
+        if(this.state.link === null || this.state.link.length <= 0) {
+            return;
+        }
+
+        var longLink;
+        if( this.state.link.match(/(.*)\?(.*)/) === null ) {
+            longLink = this.state.link + '?';
+        }
+        else {
+            longLink = this.state.link + '&';
+        }
+
         // generate normal link
-        var longLink = this.state.link + '?utm_source=' + this.state.source + '&utm_medium=' + this.state.medium + '&utm_campaing=' + encodeURIComponent(this.state.campaing);
+        longLink += 'utm_source=' + this.state.source + '&utm_medium=' + this.state.medium + '&utm_campaing=' + encodeURIComponent(this.state.campaing);
         this.setState({
             'longLink': longLink
         });
