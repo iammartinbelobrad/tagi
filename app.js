@@ -86,7 +86,7 @@ var Tagi = React.createClass({
         }
 
         // generate normal link
-        longLink += 'utm_source=' + this.state.source + '&utm_medium=' + this.state.medium + '&utm_campaing=' + encodeURIComponent(this.state.campaing);
+        longLink += 'utm_source=' + this.state.source + '&utm_medium=' + this.state.medium + '&utm_campaign=' + encodeURIComponent(this.state.campaing);
         this.setState({
             'longLink': longLink
         });
